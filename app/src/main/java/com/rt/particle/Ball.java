@@ -9,21 +9,28 @@ public class Ball
 		RectF mBall;
 		Context context;
 		Random r;
-		int x,y,width,height,direction,xVel,yVel;
+		int x,y,width,height,direction,xVel,yVel,collide,size,time;
 		Paint mPaint;
+
+		boolean collided;
 		
 		public Ball(Context context){
 				this.context = context;
 				r = new Random();
-				x=r.nextInt(context.getResources().getDisplayMetrics().widthPixels);
-				y=r.nextInt(context.getResources().getDisplayMetrics().heightPixels);
-				mBall = new RectF();	
+				size = r.nextInt(100);
+				//size =5;
+				
+				
+			//	x=r.nextInt(context.getResources().getDisplayMetrics().widthPixels);
+			//  y=r.nextInt(context.getResources().getDisplayMetrics().heightPixels);
+				mBall = new RectF(x,y,size,size);	
 				direction = r.nextInt(3);
+				
 				mPaint = new Paint();
 				mPaint.setAntiAlias(true);
-				mPaint.setColor(Color.YELLOW);
-				xVel= r.nextInt(10)+5;
-				yVel= r.nextInt(10)+5;
+				mPaint.setColor(Color.rgb(r.nextInt(50)+150,r.nextInt(50),255));
+				xVel= r.nextInt(5)+1;
+				yVel= r.nextInt(5)+1;
 				
 				
 				
@@ -32,20 +39,85 @@ public class Ball
 		
 		public void draw(Canvas canvas){
 				
+				update();
+				
 				canvas.drawOval(mBall,mPaint);
 				
-				update();
+				
+				
+				checkCollision();
+				
 		}
 		public void update(){
-				switch(direction){
-						case 0:
+				time++;
+				
+				
+				
+						if(direction==0){
 								x-=xVel;
 								y-=yVel;
-								break;
-						case 1:
-								
+								}
+				if(direction==1){
+								x+=xVel;
+								y-=yVel;
+								}
+				if(direction==2){
+								x+=xVel;
+								y+=yVel; 
+								}
+				if(direction==3){
+								x-=xVel;
+								y+=yVel;
+								}
+				
+				mBall.set(x,y,size+x,size+y);
+				
+		}
+		
+		public void checkCollision(){
+				if(collided){
+						mPaint.setAlpha(r.nextInt(50)+100);
+				if(collide==0){
+						if(direction==0){
+								direction=3;
+						}
+						if(direction==1){
+								direction=2;
+						}
+				}
+				if(collide==1){
+						if(direction==2){
+								direction=3;
+						}
+						if(direction==1){
+								direction=0;
+						}
+				}
+				if(collide==2){
+						if(direction==3){
+								direction=0;
+						}
+						if(direction==2){
+								direction=1;
+						}
+				}
+				if(collide==3){
+						if(direction==0){
+								direction=1;
+						}
+						if(direction==3){
+								direction=2;
+						}
 				}
 				
+				collided=false;
+				}
+				
+		}
+		void setXY(int x, int y){
+				this.x=x;
+				this.y=y;
+				mBall.set(x,y,size+x,size+y);
 		}
 		
 		
