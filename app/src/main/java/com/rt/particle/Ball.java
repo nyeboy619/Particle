@@ -30,8 +30,8 @@ public class Ball
 				mPaint.setAntiAlias(true);
 				mPaint.setStrokeWidth(r.nextInt(1));
 				mPaint.setColor(Color.rgb( r.nextInt(255)+200,r.nextInt(255)+200,r.nextInt(255)+200));
-				xVel= r.nextInt(2)+1;
-				yVel= r.nextInt(2)+1;
+				xVel= r.nextInt(5)+1;
+				yVel= r.nextInt(5)+1;
 				
 				
 				

@@ -24,6 +24,7 @@ public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 	Ball temp;
 	Lines line;
 	int count;
+	ActivePaint paint;
 	
 	
 	public MainPanel(Context context,Display display){
@@ -34,7 +35,8 @@ public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 		touchPoint = new Point();
 		balls = new ArrayList<>();
 		line = new Lines(context);
-		for(int i=0;i<1;i++){
+		paint = new ActivePaint();
+		for(int i=0;i<25;i++){
 				
 				Ball b = new Ball(context);	
 				balls.add(b);
@@ -117,7 +119,9 @@ public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 				temp = balls.get(i);
 				//	pts[count].x= ball.x;
 					//pts[count].y=ball.y;
-			  canvas.drawLine(ball.x+ball.size/2,ball.y+ball.size/2,temp.x+temp.size/2,temp.y+temp.size/2,ball.mPaint);
+					
+				paint.updateAlpha(ball.x,ball.y,temp.x,temp.y);
+			  canvas.drawLine(ball.x+ball.size/2,ball.y+ball.size/2,temp.x+temp.size/2,temp.y+temp.size/2,paint.mPaint);
 				}
 		}
 	}
