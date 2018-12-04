@@ -17,20 +17,22 @@ public class Ball
 		public Ball(Context context){
 				this.context = context;
 				r = new Random();
-				size = r.nextInt(100);
-				//size =5;
+				//size = r.nextInt(100);
+				size =5;
 				
 				
-			//	x=r.nextInt(context.getResources().getDisplayMetrics().widthPixels);
-			//  y=r.nextInt(context.getResources().getDisplayMetrics().heightPixels);
+			x=r.nextInt(context.getResources().getDisplayMetrics().widthPixels);
+			  y=r.nextInt(context.getResources().getDisplayMetrics().heightPixels);
 				mBall = new RectF(x,y,size,size);	
 				direction = r.nextInt(3);
 				
 				mPaint = new Paint();
 				mPaint.setAntiAlias(true);
-				mPaint.setColor(Color.rgb(r.nextInt(50)+150,r.nextInt(50),255));
-				xVel= r.nextInt(5)+1;
-				yVel= r.nextInt(5)+1;
+				mPaint.setStrokeWidth(r.nextInt(1));
+				mPaint.setColor(Color.rgb( r.nextInt(255)+200,r.nextInt(255)+200,r.nextInt(255)+200));
+				xVel= r.nextInt(2)+1;
+				yVel= r.nextInt(2)+1;
+				
 				
 				
 				
@@ -76,7 +78,7 @@ public class Ball
 		
 		public void checkCollision(){
 				if(collided){
-						mPaint.setAlpha(r.nextInt(50)+100);
+						//mPaint.setAlpha(r.nextInt(50)+100);
 				if(collide==0){
 						if(direction==0){
 								direction=3;

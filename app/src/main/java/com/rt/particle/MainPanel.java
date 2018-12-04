@@ -5,38 +5,45 @@ import android.graphics.*;
 import android.view.*;
 import android.widget.*;
 import java.util.*;
+import android.accessibilityservice.*;
 
 public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 {
 	private MainThread thread;
 
 	Point touchPoint;
+	
 	ArrayList<Ball> balls;
-	int count;
+	
 	
 
 
 	Context context;
 	Display display;
+	Ball ball;
+	Ball temp;
+	Lines line;
+	int count;
 	
-	Thread t;
+	
 	public MainPanel(Context context,Display display){
 		super(context);
-
 		this.context = context;
 		getHolder().addCallback(this);
-		t = new Thread();
-		
 		this.display = display;
 		touchPoint = new Point();
 		balls = new ArrayList<>();
-		
-		
-		
-			
+		line = new Lines(context);
+		for(int i=0;i<1;i++){
+				
+				Ball b = new Ball(context);	
+				balls.add(b);
+		}		
 		thread = new MainThread(getHolder(),this);
 
 		setFocusable(true);
+		
+		
 	}
 
 	@Override
@@ -76,6 +83,7 @@ public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 		
 			break;
 			case MotionEvent.ACTION_MOVE:
+					
 
 			break;
 			case MotionEvent.ACTION_UP:
@@ -96,23 +104,49 @@ public class MainPanel extends SurfaceView implements SurfaceHolder.Callback
 	   ifCollide();
 
 	}
-
+//particle molecular structure
 	@Override
 	public void draw(Canvas canvas){
 		super.draw(canvas);
-		for(Ball ball : balls){
-				
+		
+		
+			for(Iterator<Ball> iter =balls.iterator();iter.hasNext();){
+				ball = iter.next();
 				ball.draw(canvas);
+				for(int i=0;i<balls.size();i++){
+				temp = balls.get(i);
+				//	pts[count].x= ball.x;
+					//pts[count].y=ball.y;
+			  canvas.drawLine(ball.x+ball.size/2,ball.y+ball.size/2,temp.x+temp.size/2,temp.y+temp.size/2,ball.mPaint);
+				}
 		}
-
-
 	}
+	// particles Only
+/*
+		@Override
+		public void draw(Canvas canvas){
+				super.draw(canvas);
+
+
+				for(Iterator<Ball> iter =balls.iterator();iter.hasNext();){
+						ball = iter.next();
+						ball.draw(canvas);
+								
+				}
+		}
+		*/
+	
+	
+	
+	
+	
 	
 	void ifCollide(){
 			RectF temp = new RectF();
 			for(Iterator<Ball> iter =balls.iterator();iter.hasNext();){
 					Ball ball = iter.next();
 					temp.set(ball.mBall);
+					
 			/*		while(iter.hasNext()){
 							if(temp.contains(ball.mBall)){
 									iter.remove();
